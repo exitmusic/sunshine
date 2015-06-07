@@ -5,6 +5,8 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -32,7 +34,19 @@ public class MainActivityFragment extends Fragment {
                 "Sun - Snowy - 32/14"
         };
         List<String> weekForecast = new ArrayList<String>(Arrays.asList(forecastData));
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(
+                getActivity(), // current context (this activity)
+                R.layout.list_item_forecast, // Name of the layout id
+                R.id.list_item_forecast_textview, // id of the textview to populate
+                weekForecast);
 
-        return inflater.inflate(R.layout.fragment_main, container, false);
+        // Get view hierarchy?
+        View rootView = inflater.inflate(R.layout.fragment_main, container, false);
+
+        // Get reference to ListView and bind the adapter to it
+        ListView listView = (ListView) rootView.findViewById(R.id.listview_forecast);
+        listView.setAdapter(adapter);
+
+        return rootView;
     }
 }
