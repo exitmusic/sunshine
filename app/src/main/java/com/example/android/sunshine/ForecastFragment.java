@@ -105,6 +105,7 @@ public class ForecastFragment extends Fragment {
                     forecastJsonStr = null;
                 }
                 forecastJsonStr = buffer.toString();
+                return null;
             } catch (IOException e) {
                 Log.e(LOG_TAG, "Error ", e);
                 // If the code didn't successfully get the weather data, there's no point in attempting
@@ -122,7 +123,6 @@ public class ForecastFragment extends Fragment {
                     }
                 }
             }
-            return null;
         }
     }
 }
