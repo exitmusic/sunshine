@@ -37,6 +37,7 @@ import java.util.List;
 public class ForecastFragment extends Fragment {
 
     private final String LOG_TAG = ForecastFragment.class.getSimpleName();
+    private ArrayAdapter<String> mForecastAdapter;
 
     public ForecastFragment() {
     }
@@ -82,7 +83,7 @@ public class ForecastFragment extends Fragment {
                 "Sun - Snowy - 32/14"
         };
         List<String> weekForecast = new ArrayList<String>(Arrays.asList(forecastData));
-        ArrayAdapter<String> mForecastAdapter = new ArrayAdapter<String>(
+        mForecastAdapter = new ArrayAdapter<String>(
                 getActivity(), // current context (this activity)
                 R.layout.list_item_forecast, // Name of the layout id
                 R.id.list_item_forecast_textview, // id of the textview to populate
@@ -97,6 +98,7 @@ public class ForecastFragment extends Fragment {
 
         return rootView;
     }
+
 
     private class FetchWeatherTask extends AsyncTask<String, Void, String[]> {
 
@@ -298,6 +300,19 @@ public class ForecastFragment extends Fragment {
                     }
                 }
             }
+        }
+
+        @Override
+        protected void onPostExecute(String[] strings) {
+            super.onPostExecute(strings);
+
+            List<String> weekForecast = new ArrayList<String>(Arrays.asList(strings));
+            mForecastAdapter.clear();
+            for (String day : weekForecast) {
+                mForecastAdapter.add(day);
+            }
+            // Requires API 11, current min is 10
+            //mForecastAdapter.addAll(weekForecast);
         }
     }
 }
