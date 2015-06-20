@@ -71,6 +71,7 @@ public class ForecastFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         String[] forecastData = {
                 "Mon - Sunny - 83/63",
                 "Tues - Foggy - 70/46",
@@ -81,7 +82,7 @@ public class ForecastFragment extends Fragment {
                 "Sun - Snowy - 32/14"
         };
         List<String> weekForecast = new ArrayList<String>(Arrays.asList(forecastData));
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(
+        ArrayAdapter<String> mForecastAdapter = new ArrayAdapter<String>(
                 getActivity(), // current context (this activity)
                 R.layout.list_item_forecast, // Name of the layout id
                 R.id.list_item_forecast_textview, // id of the textview to populate
@@ -92,7 +93,7 @@ public class ForecastFragment extends Fragment {
 
         // Get reference to ListView and bind the adapter to it
         ListView listView = (ListView) rootView.findViewById(R.id.listview_forecast);
-        listView.setAdapter(adapter);
+        listView.setAdapter(mForecastAdapter);
 
         return rootView;
     }
