@@ -303,16 +303,13 @@ public class ForecastFragment extends Fragment {
         }
 
         @Override
-        protected void onPostExecute(String[] strings) {
-            super.onPostExecute(strings);
-
-            List<String> weekForecast = new ArrayList<String>(Arrays.asList(strings));
-            mForecastAdapter.clear();
-            for (String day : weekForecast) {
-                mForecastAdapter.add(day);
+        protected void onPostExecute(String[] result) {
+            if (result != null) {
+                mForecastAdapter.clear();
+                for (String dayForecast : result) {
+                    mForecastAdapter.add(dayForecast);
+                }
             }
-            // Requires API 11, current min is 10
-            //mForecastAdapter.addAll(weekForecast);
         }
     }
 }
