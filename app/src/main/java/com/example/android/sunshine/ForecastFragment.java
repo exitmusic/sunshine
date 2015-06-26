@@ -40,6 +40,7 @@ public class ForecastFragment extends Fragment {
 
     private final String LOG_TAG = ForecastFragment.class.getSimpleName();
     private ArrayAdapter<String> mForecastAdapter;
+    private Toast dayForecastToast;
 
     public ForecastFragment() {
     }
@@ -100,8 +101,13 @@ public class ForecastFragment extends Fragment {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast dayToast = Toast.makeText(getActivity(), "hello", Toast.LENGTH_SHORT);
-                dayToast.show();
+                String forecast = mForecastAdapter.getItem(position);
+                
+                if (dayForecastToast != null) {
+                    dayForecastToast.cancel();
+                }
+                dayForecastToast = Toast.makeText(getActivity(), forecast, Toast.LENGTH_SHORT);
+                dayForecastToast.show();
             }
         });
 
