@@ -120,10 +120,10 @@ public class TestDb extends AndroidTestCase {
         ContentValues testValues = TestUtilities.createNorthPoleLocationValues();
 
         // Insert ContentValues into database and get a row ID back
-        long rowId = db.insert(WeatherContract.LocationEntry.TABLE_NAME, null, testValues);
+        long locationRowId = db.insert(WeatherContract.LocationEntry.TABLE_NAME, null, testValues);
 
         // Verify a row was returned
-        assertTrue(rowId != -1);
+        assertTrue(locationRowId != -1);
 
         // Query the database and receive a Cursor back
         Cursor c = db.query(
