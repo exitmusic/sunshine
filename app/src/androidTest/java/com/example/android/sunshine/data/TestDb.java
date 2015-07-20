@@ -126,16 +126,26 @@ public class TestDb extends AndroidTestCase {
         assertTrue(rowId != -1);
 
         // Query the database and receive a Cursor back
-        Cursor c = db.query(WeatherContract.LocationEntry.TABLE_NAME, null, null, null, null, null, null, null);
+        Cursor c = db.query(
+                WeatherContract.LocationEntry.TABLE_NAME, // Table to query
+                null, // All columns
+                null, // Columns for the WHERE clause
+                null, // Values for the WHERE clause
+                null, // Columns to group by
+                null, // Columns to filter by row groups
+                null // Sort order
+        );
 
         // Move the cursor to a valid database row
-        c.moveToFirst();
+        assertTrue("Error: No Records returned from location query", c.moveToFirst());
 
         // Validate data in resulting Cursor with the original ContentValues
         // (you can use the validateCurrentRecord function in TestUtilities to validate the
         // query if you like)
-        String error = "not expected";
-        TestUtilities.validateCurrentRecord(error, c, testValues);
+        TestUtilities.validateCurrentRecord("Error: Location Query Validation Failed", c, testValues);
+
+        // Move the cursor to demonstrate that there is only one record in the database
+        assertFalse( "Error: More than one record returned from location query", c.moveToNext());
 
         // Finally, close the cursor and database
         c.close();
