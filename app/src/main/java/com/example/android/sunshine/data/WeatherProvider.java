@@ -258,17 +258,20 @@ public class WeatherProvider extends ContentProvider {
         // Student: Start by getting a writable database
         final SQLiteDatabase db = mOpenHelper.getWritableDatabase();
         final int match = sUriMatcher.match(uri);
-        int numRows;
+        int rowsDeleted;
 
         // Student: Use the uriMatcher to match the WEATHER and LOCATION URI's we are going to
         // handle.  If it doesn't match these, throw an UnsupportedOperationException.
+
+        // This will return number of rows deleted for delete all rows action
+        if (selection == null) selection = "1";
         switch (match) {
             case WEATHER: {
-                numRows  = db.delete(WeatherContract.WeatherEntry.TABLE_NAME, selection, selectionArgs);
+                rowsDeleted  = db.delete(WeatherContract.WeatherEntry.TABLE_NAME, selection, selectionArgs);
                 break;
             }
             case LOCATION: {
-                numRows = db.delete(WeatherContract.LocationEntry.TABLE_NAME, selection, selectionArgs);
+                rowsDeleted = db.delete(WeatherContract.LocationEntry.TABLE_NAME, selection, selectionArgs);
                 break;
             }
             default:
@@ -279,10 +282,14 @@ public class WeatherProvider extends ContentProvider {
         // the uri listeners (using the content resolver) if the rowsDeleted != 0 or the selection
         // is null.
         // Oh, and you should notify the listeners here.
-        getContext().getContentResolver().notifyChange(uri, null);
+
+        // Only notify listeners if rows are deleted
+        if (rowsDeleted != 0) {
+            getContext().getContentResolver().notifyChange(uri, null);
+        }
 
         // Student: return the actual rows deleted
-        return numRows;
+        return rowsDeleted;
     }
 
     private void normalizeDate(ContentValues values) {
@@ -300,23 +307,28 @@ public class WeatherProvider extends ContentProvider {
         // by the update.
         final SQLiteDatabase db = mOpenHelper.getWritableDatabase();
         final int match = sUriMatcher.match(uri);
-        int numRows;
+        int rowsUpdated;
 
         switch (match) {
             case WEATHER: {
-                numRows  = db.update(WeatherContract.WeatherEntry.TABLE_NAME, values, selection, selectionArgs);
+                normalizeDate(values);
+                rowsUpdated  = db.update(WeatherContract.WeatherEntry.TABLE_NAME, values, selection, selectionArgs);
                 break;
             }
             case LOCATION: {
-                numRows = db.update(WeatherContract.LocationEntry.TABLE_NAME, values, selection, selectionArgs);
+                rowsUpdated = db.update(WeatherContract.LocationEntry.TABLE_NAME, values, selection, selectionArgs);
                 break;
             }
             default:
                 throw new UnsupportedOperationException("Unknown uri: " + uri);
         }
-        getContext().getContentResolver().notifyChange(uri, null);
 
-        return numRows;
+        // Only notify listeners if rows are updated
+        if (rowsUpdated != 0) {
+            getContext().getContentResolver().notifyChange(uri, null);
+        }
+
+        return rowsUpdated;
     }
 
     @Override
