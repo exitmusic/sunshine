@@ -21,12 +21,6 @@ public class MainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         mLocation = Utility.getPreferredLocation(this);
         setContentView(R.layout.activity_main);
-
-        if (savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction()
-                    .add(0, new ForecastFragment(), FORECASTFRAGMENT_TAG)
-                    .commit();
-        }
     }
 
     @Override
