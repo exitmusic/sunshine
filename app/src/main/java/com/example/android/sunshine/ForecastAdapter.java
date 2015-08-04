@@ -44,7 +44,7 @@ public class ForecastAdapter extends CursorAdapter {
         iconView.setImageResource(R.drawable.abc_ic_ab_back_mtrl_am_alpha);
 
         // Read date from cursor
-        Long dateInMilliseconds = cursor.getLong(ForecastFragment.COL_WEATHER_DATE);
+        long dateInMilliseconds = cursor.getLong(ForecastFragment.COL_WEATHER_DATE);
         // Find TextView and set it to the formatted date
         TextView dateView = (TextView) view.findViewById(R.id.list_item_date_textview);
         dateView.setText(Utility.getFriendlyDayString(context, dateInMilliseconds));
