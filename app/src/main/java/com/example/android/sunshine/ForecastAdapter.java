@@ -19,36 +19,12 @@ public class ForecastAdapter extends CursorAdapter {
         super(context, c, flags);
     }
 
-    /**
-     * Prepare the weather high/lows for presentation.
-     */
-    private String formatHighLows(double high, double low) {
-        boolean isMetric = Utility.isMetric(mContext);
-        String highLowStr = Utility.formatTemperature(high, isMetric) + "/" + Utility.formatTemperature(low, isMetric);
-        return highLowStr;
-    }
-
-    /*
-        This is ported from FetchWeatherTask --- but now we go straight from the cursor to the
-        string.
-     */
-    private String convertCursorRowToUXFormat(Cursor cursor) {
-        String highAndLow = formatHighLows(
-                cursor.getDouble(ForecastFragment.COL_WEATHER_MAX_TEMP),
-                cursor.getDouble(ForecastFragment.COL_WEATHER_MIN_TEMP));
-
-        return Utility.formatDate(cursor.getLong(ForecastFragment.COL_WEATHER_DATE)) +
-                " - " + cursor.getString(ForecastFragment.COL_WEATHER_DESC) +
-                " - " + highAndLow;
-    }
-
     /*
         Remember that these views are reused as needed.
      */
     @Override
     public View newView(Context context, Cursor cursor, ViewGroup parent) {
         View view = LayoutInflater.from(context).inflate(R.layout.list_item_forecast, parent, false);
-
         return view;
     }
 
@@ -67,9 +43,16 @@ public class ForecastAdapter extends CursorAdapter {
         ImageView iconView = (ImageView) view.findViewById(R.id.list_item_icon);
         iconView.setImageResource(R.drawable.abc_ic_ab_back_mtrl_am_alpha);
 
-        // TODO Read date from cursor
+        // Read date from cursor
+        Long dateInMilliseconds = cursor.getLong(ForecastFragment.COL_WEATHER_DATE);
+        // Find TextView and set it to the formatted date
+        TextView dateView = (TextView) view.findViewById(R.id.list_item_date_textview);
+        dateView.setText(Utility.getFriendlyDayString(context, dateInMilliseconds));
 
-        // TODO Read weather forecast from cursor
+        // Read weather forecast from cursor
+        String description = cursor.getString(ForecastFragment.COL_WEATHER_DESC);
+        TextView forecastView = (TextView) view.findViewById(R.id.list_item_forecast_textview);
+        forecastView.setText(description);
 
         // Read user preference for metric or imperial temperature units
         boolean isMetric = Utility.isMetric(context);
@@ -80,5 +63,8 @@ public class ForecastAdapter extends CursorAdapter {
         highView.setText(Utility.formatTemperature(high, isMetric));
 
         // TODO Read low temperature from cursor
+        double low = cursor.getDouble(ForecastFragment.COL_WEATHER_MIN_TEMP);
+        TextView lowView = (TextView) view.findViewById(R.id.list_item_low_textview);
+        lowView.setText(Utility.formatTemperature(low, isMetric));
     }
 }
