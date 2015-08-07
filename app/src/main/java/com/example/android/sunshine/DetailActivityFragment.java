@@ -16,9 +16,9 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.example.android.sunshine.data.WeatherContract;
+import com.example.android.sunshine.data.WeatherContract.WeatherEntry;
 
 
 /**
@@ -34,13 +34,20 @@ public class DetailActivityFragment extends Fragment implements LoaderCallbacks<
 
     private static final int DETAIL_LOADER = 0;
 
-
-    private static final String[] FORECAST_COLUMNS = {
-            WeatherContract.WeatherEntry.TABLE_NAME + "." + WeatherContract.WeatherEntry._ID,
-            WeatherContract.WeatherEntry.COLUMN_DATE,
-            WeatherContract.WeatherEntry.COLUMN_SHORT_DESC,
-            WeatherContract.WeatherEntry.COLUMN_MAX_TEMP,
-            WeatherContract.WeatherEntry.COLUMN_MIN_TEMP
+    private static final String[] DETAIL_COLUMNS = {
+            WeatherEntry.TABLE_NAME + "." + WeatherContract.WeatherEntry._ID,
+            WeatherEntry.COLUMN_DATE,
+            WeatherEntry.COLUMN_SHORT_DESC,
+            WeatherEntry.COLUMN_MAX_TEMP,
+            WeatherEntry.COLUMN_MIN_TEMP,
+            WeatherEntry.COLUMN_HUMIDITY,
+            WeatherEntry.COLUMN_PRESSURE,
+            WeatherEntry.COLUMN_WIND_SPEED,
+            WeatherEntry.COLUMN_DEGREES,
+            WeatherEntry.COLUMN_WEATHER_ID,
+            // This works because the WeatherProvider returns location data joined with
+            // weather data, even though they're stored in two different tables.
+            WeatherContract.LocationEntry.COLUMN_LOCATION_SETTING
     };
 
     // These indices are tied to FORECAST_COLUMNS.  If FORECAST_COLUMNS changes, these
@@ -111,7 +118,7 @@ public class DetailActivityFragment extends Fragment implements LoaderCallbacks<
         // Create and return a CursorLoader that will create a cursor for the data displayed
         return new CursorLoader(getActivity(),
                 intent.getData(),
-                FORECAST_COLUMNS,
+                DETAIL_COLUMNS,
                 null,
                 null,
                 null
@@ -136,8 +143,8 @@ public class DetailActivityFragment extends Fragment implements LoaderCallbacks<
 
         mForecast = String.format("%s - %s - %s/%s", dateString, weatherDescription, high, low);
 
-        TextView detailTextView = (TextView) getView().findViewById(R.id.detail_text);
-        detailTextView.setText(mForecast);
+        //TextView detailTextView = (TextView) getView().findViewById(R.id.detail_text);
+        //detailTextView.setText(mForecast);
 
         // TODO: Understand this
         // If onCreateOptionsMenu has already happened, we need to update the share intent now
