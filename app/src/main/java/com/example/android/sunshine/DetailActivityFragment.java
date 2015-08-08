@@ -16,6 +16,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.android.sunshine.data.WeatherContract;
 import com.example.android.sunshine.data.WeatherContract.WeatherEntry;
@@ -34,6 +36,7 @@ public class DetailActivityFragment extends Fragment implements LoaderCallbacks<
 
     private static final int DETAIL_LOADER = 0;
 
+    // Database column projection
     private static final String[] DETAIL_COLUMNS = {
             WeatherEntry.TABLE_NAME + "." + WeatherContract.WeatherEntry._ID,
             WeatherEntry.COLUMN_DATE,
@@ -50,13 +53,17 @@ public class DetailActivityFragment extends Fragment implements LoaderCallbacks<
             WeatherContract.LocationEntry.COLUMN_LOCATION_SETTING
     };
 
-    // These indices are tied to FORECAST_COLUMNS.  If FORECAST_COLUMNS changes, these
-    // must change.
-    static final int COL_WEATHER_ID = 0;
-    static final int COL_WEATHER_DATE = 1;
-    static final int COL_WEATHER_DESC = 2;
-    static final int COL_WEATHER_MAX_TEMP = 3;
-    static final int COL_WEATHER_MIN_TEMP = 4;
+    // These indices are tied to DETAIL_COLUMNS.  If DETAIL_COLUMNS changes, these must change
+    static static final int COL_WEATHER_ID = 0;
+    static static final int COL_WEATHER_DATE = 1;
+    static static final int COL_WEATHER_DESC = 2;
+    static static final int COL_WEATHER_MAX_TEMP = 3;
+    static static final int COL_WEATHER_MIN_TEMP = 4;
+    public static final int COL_WEATHER_HUMIDITY = 5;
+    public static final int COL_WEATHER_PRESSURE = 6;
+    public static final int COL_WEATHER_WIND_SPEED = 7;
+    public static final int COL_WEATHER_DEGREES = 8;
+    public static final int COL_WEATHER_CONDITION_ID = 9;
 
     public DetailActivityFragment() {
     }
