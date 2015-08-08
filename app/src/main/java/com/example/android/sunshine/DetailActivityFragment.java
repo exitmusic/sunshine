@@ -54,11 +54,11 @@ public class DetailActivityFragment extends Fragment implements LoaderCallbacks<
     };
 
     // These indices are tied to DETAIL_COLUMNS.  If DETAIL_COLUMNS changes, these must change
-    static static final int COL_WEATHER_ID = 0;
-    static static final int COL_WEATHER_DATE = 1;
-    static static final int COL_WEATHER_DESC = 2;
-    static static final int COL_WEATHER_MAX_TEMP = 3;
-    static static final int COL_WEATHER_MIN_TEMP = 4;
+    public static final int COL_WEATHER_ID = 0;
+    public static final int COL_WEATHER_DATE = 1;
+    public static final int COL_WEATHER_DESC = 2;
+    public static final int COL_WEATHER_MAX_TEMP = 3;
+    public static final int COL_WEATHER_MIN_TEMP = 4;
     public static final int COL_WEATHER_HUMIDITY = 5;
     public static final int COL_WEATHER_PRESSURE = 6;
     public static final int COL_WEATHER_WIND_SPEED = 7;
