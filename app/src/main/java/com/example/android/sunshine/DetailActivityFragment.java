@@ -162,7 +162,7 @@ public class DetailActivityFragment extends Fragment implements LoaderCallbacks<
             // Read weather condition ID from cursor
             int weatherId = data.getInt(COL_WEATHER_CONDITION_ID);
             // Use placeholder Image
-            mIconView.setImageResource(R.drawable.abc_ic_ab_back_mtrl_am_alpha);
+            mIconView.setImageResource(R.mipmap.ic_launcher);
 
             // Read date from cursor and update views for day of week and date
             long date = data.getLong(COL_WEATHER_DATE);

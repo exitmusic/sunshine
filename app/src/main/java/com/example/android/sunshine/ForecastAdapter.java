@@ -90,7 +90,7 @@ public class ForecastAdapter extends CursorAdapter {
         ViewHolder viewHolder = (ViewHolder) view.getTag();
 
         // Use placeholder image for now
-        viewHolder.iconView.setImageResource(R.drawable.abc_ic_ab_back_mtrl_am_alpha);
+        viewHolder.iconView.setImageResource(R.mipmap.ic_launcher);
 
         // Read date from cursor
         long dateInMilliseconds = cursor.getLong(ForecastFragment.COL_WEATHER_DATE);
