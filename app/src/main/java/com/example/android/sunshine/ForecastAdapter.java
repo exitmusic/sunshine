@@ -92,6 +92,7 @@ public class ForecastAdapter extends CursorAdapter {
         int viewType = getItemViewType(cursor.getPosition());
         int iconId = -1;
 
+        // Get color icon for today's forecast, get black & white icon for future forecast days
         switch (viewType)  {
             case VIEW_TYPE_TODAY: {
                 iconId = Utility.getArtResourceForWeatherCondition(weatherId);
