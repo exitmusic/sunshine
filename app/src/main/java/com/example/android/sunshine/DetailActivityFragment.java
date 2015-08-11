@@ -140,7 +140,7 @@ public class DetailActivityFragment extends Fragment implements LoaderCallbacks<
 
         Intent intent = getActivity().getIntent();
 
-        if (intent == null) {
+        if (intent == null || intent.getData() == null) {
             return null;
         }
 
