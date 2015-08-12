@@ -89,12 +89,20 @@ public class MainActivity extends ActionBarActivity implements ForecastFragment.
         super.onResume();
         String location = Utility.getPreferredLocation(this);
 
+        // update the location in our second pane using the fragment manager
         if (location != null && !location.equals(mLocation)) {
-            ForecastFragment ff = (ForecastFragment) getSupportFragmentManager()
+            ForecastFragment ff = (ForecastFragment)getSupportFragmentManager()
                     .findFragmentById(R.id.fragment_forecast);
 
-            if (ff != null) {
+            if ( ff != null ) {
                 ff.onLocationChanged();
+            }
+
+            DetailActivityFragment df = (DetailActivityFragment) getSupportFragmentManager()
+                    .findFragmentByTag(DETAILFRAGMENT_TAG);
+
+            if ( df != null ) {
+                df.onLocationChanged(location);
             }
             mLocation = location;
         }
