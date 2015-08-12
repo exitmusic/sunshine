@@ -2,6 +2,7 @@ package com.example.android.sunshine;
 
 import android.content.Intent;
 import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
@@ -34,6 +35,7 @@ public class DetailActivityFragment extends Fragment implements LoaderCallbacks<
     private static final String FORECAST_SHARE_HASHTAG = " #SunshineApp";
     private String mForecast;
     private ShareActionProvider mShareActionProvider;
+    private Uri mUri;
 
     private static final int DETAIL_LOADER = 0;
 
@@ -89,6 +91,12 @@ public class DetailActivityFragment extends Fragment implements LoaderCallbacks<
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
+        Bundle arguments = getArguments();
+
+        if (arguments != null) {
+            mUri = arguments.getParcelable(DetailActivityFragment.DETAIL_URI);
+        }
+
         View rootView = inflater.inflate(R.layout.fragment_detail, container, false);
 
         mIconView = (ImageView) rootView.findViewById(R.id.detail_icon);
@@ -139,20 +147,17 @@ public class DetailActivityFragment extends Fragment implements LoaderCallbacks<
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         Log.v(LOG_TAG, "In onCreateLoader");
 
-        Intent intent = getActivity().getIntent();
-
-        if (intent == null || intent.getData() == null) {
-            return null;
+        if (mUri != null) {
+            // Create and return a CursorLoader that will create a cursor for the data displayed
+            return new CursorLoader(getActivity(),
+                    mUri,
+                    DETAIL_COLUMNS,
+                    null,
+                    null,
+                    null
+            );
         }
-
-        // Create and return a CursorLoader that will create a cursor for the data displayed
-        return new CursorLoader(getActivity(),
-                intent.getData(),
-                DETAIL_COLUMNS,
-                null,
-                null,
-                null
-        );
+        return null;
     }
 
     @Override
