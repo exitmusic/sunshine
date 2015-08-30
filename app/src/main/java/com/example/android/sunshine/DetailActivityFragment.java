@@ -31,8 +31,8 @@ public class DetailActivityFragment extends Fragment implements LoaderCallbacks<
 
     private static final String LOG_TAG = DetailActivityFragment.class.getSimpleName();
     static final String DETAIL_URI = "URI";
-
     private static final String FORECAST_SHARE_HASHTAG = " #SunshineApp";
+
     private String mForecast;
     private ShareActionProvider mShareActionProvider;
     private Uri mUri;
@@ -94,7 +94,7 @@ public class DetailActivityFragment extends Fragment implements LoaderCallbacks<
         Bundle arguments = getArguments();
 
         if (arguments != null) {
-            mUri = arguments.getParcelable(DetailActivityFragment.DETAIL_URI);
+            mUri = arguments.getParcelable(DETAIL_URI);
         }
 
         View rootView = inflater.inflate(R.layout.fragment_detail, container, false);
